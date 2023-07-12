@@ -31,7 +31,9 @@ from langchain import PromptTemplate, FewShotPromptTemplate
 from langchain.prompts.example_selector import SemanticSimilarityExampleSelector
 from langchain import OpenAI
 
+st.title('Annie: The ANR Assistant')
 
+api_key = st.text_input("Put your OpenAPI key here")
 
 if not api_key:
     st.write("Please input an OpenAPI key to continue")
@@ -56,9 +58,7 @@ else:
     transcript = ''
     transcribed_files = set()
 
-    st.title('Annie: The ANR Assistant')
 
-    api_key = st.text_input("Put your OpenAPI key here")
     huggingface_key = "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"
 
     openai.api_key = api_key
