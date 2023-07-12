@@ -31,38 +31,40 @@ from langchain import PromptTemplate, FewShotPromptTemplate
 from langchain.prompts.example_selector import SemanticSimilarityExampleSelector
 from langchain import OpenAI
 
-llm = OpenAI(temperature=0)
 
-
-EMBEDDING_MODEL = "text-embedding-ada-002"
-GPT_MODEL = "gpt-3.5-turbo"
-
-## Loader
-
-embeddings = HuggingFaceEmbeddings()
-index_name = 'kbchat'
-
-#db = FAISS.load_local("faiss_index", embeddings)
-db = Pinecone.from_existing_index('kbchat', embeddings)
-
-# Page layout
-info = ''
-summary = ''
-transcript = ''
-transcribed_files = set()
-
-st.title('Annie: The ANR Assistant')
-
-api_key = st.text_input("Put your OpenAPI key here")
-huggingface_key = "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"
-
-openai.api_key = api_key
-#os.environ['OPENAI_API_KEY'] = api_key
-#os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
 
 if not api_key:
     st.write("Please input an OpenAPI key to continue")
 else:
+    llm = OpenAI(temperature=0)
+
+
+    EMBEDDING_MODEL = "text-embedding-ada-002"
+    GPT_MODEL = "gpt-3.5-turbo"
+
+    ## Loader
+
+    embeddings = HuggingFaceEmbeddings()
+    index_name = 'kbchat'
+
+    #db = FAISS.load_local("faiss_index", embeddings)
+    db = Pinecone.from_existing_index('kbchat', embeddings)
+
+    # Page layout
+    info = ''
+    summary = ''
+    transcript = ''
+    transcribed_files = set()
+
+    st.title('Annie: The ANR Assistant')
+
+    api_key = st.text_input("Put your OpenAPI key here")
+    huggingface_key = "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"
+
+    openai.api_key = api_key
+    #os.environ['OPENAI_API_KEY'] = api_key
+    #os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
+
     # Sidebar
     with st.sidebar:
         st.header('Navigation')
