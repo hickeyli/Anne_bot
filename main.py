@@ -13,23 +13,7 @@ st.set_page_config(layout="wide")
 
 
 
-# Access the API key
 
-
-pinecone.init(      
-	api_key='482713ab-eec5-432a-90d4-a16bcb867334',      
-	environment='asia-northeast1-gcp'      
-)      
-index = pinecone.Index('kbchat')
-
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import Pinecone
-from langchain.document_loaders import UnstructuredFileLoader
-from langchain.chains import RetrievalQAWithSourcesChain
-from langchain import PromptTemplate, FewShotPromptTemplate
-from langchain.prompts.example_selector import SemanticSimilarityExampleSelector
-from langchain import OpenAI
 
 st.title('Annie: The ANR Assistant')
 
@@ -42,7 +26,24 @@ else:
     huggingface_key = "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"
     os.environ['OPENAI_API_KEY'] = api_key
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
+    # Access the API key
 
+
+    pinecone.init(      
+        api_key='482713ab-eec5-432a-90d4-a16bcb867334',      
+        environment='asia-northeast1-gcp'      
+    )      
+    index = pinecone.Index('kbchat')
+
+    from langchain.embeddings import HuggingFaceEmbeddings
+    from langchain.text_splitter import CharacterTextSplitter
+    from langchain.vectorstores import Pinecone
+    from langchain.document_loaders import UnstructuredFileLoader
+    from langchain.chains import RetrievalQAWithSourcesChain
+    from langchain import PromptTemplate, FewShotPromptTemplate
+    from langchain.prompts.example_selector import SemanticSimilarityExampleSelector
+    from langchain import OpenAI
+    
     llm = OpenAI(temperature=0)
 
 
