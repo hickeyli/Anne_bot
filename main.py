@@ -1,5 +1,5 @@
 import streamlit as st
-import os
+#import os
 import openai
 import json
 import re
@@ -57,8 +57,8 @@ api_key = st.text_input("Put your OpenAPI key here")
 huggingface_key = "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"
 
 openai.api_key = api_key
-os.environ['OPENAI_API_KEY'] = api_key
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
+#os.environ['OPENAI_API_KEY'] = api_key
+#os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
 
 if not api_key:
     st.write("Please input an OpenAPI key to continue")
