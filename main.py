@@ -38,6 +38,10 @@ api_key = st.text_input("Put your OpenAPI key here")
 if not api_key:
     st.write("Please input an OpenAPI key to continue")
 else:
+    openai.api_key = api_key
+    os.environ['OPENAI_API_KEY'] = api_key
+    os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
+
     llm = OpenAI(temperature=0)
 
 
@@ -61,9 +65,6 @@ else:
 
     huggingface_key = "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"
 
-    openai.api_key = api_key
-    os.environ['OPENAI_API_KEY'] = api_key
-    os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
 
     # Sidebar
     with st.sidebar:
