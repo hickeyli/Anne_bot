@@ -43,7 +43,7 @@ else:
     from langchain import PromptTemplate, FewShotPromptTemplate
     from langchain.prompts.example_selector import SemanticSimilarityExampleSelector
     from langchain import OpenAI
-    
+
     llm = OpenAI(temperature=0)
 
 
@@ -71,7 +71,7 @@ else:
     # Sidebar
     with st.sidebar:
         st.header('Navigation')
-        page = st.radio('Select a page', ['Voicemail Bot', 'KB Chat', 'Folder Watcher'])
+        page = st.radio('Select a page', ['Voicemail Bot', 'KB Chat'])
 
         # Categorize Issues
 
@@ -370,69 +370,69 @@ else:
                 
 
 
-    elif page == 'Folder Watcher':
+    # elif page == 'Folder Watcher':
         
 
-        import time
-        import io
-        from pathlib import Path
+    #     import time
+    #     import io
+    #     from pathlib import Path
 
-        st.title("Folder Cleanup")
+    #     st.title("Folder Cleanup")
         
-        folder_path = "C:/Users/hickeyli/OneDrive - Michigan State University/Desktop/AI/VMTranscribe/VMs"  # Replace with the actual folder path
+    #     folder_path = "C:/Users/hickeyli/OneDrive - Michigan State University/Desktop/AI/VMTranscribe/VMs"  # Replace with the actual folder path
 
-        if st.button("Delete Folder Contents"):
-            delete_files(folder_path)
-            st.write("Folder contents deleted.")
+    #     if st.button("Delete Folder Contents"):
+    #         delete_files(folder_path)
+    #         st.write("Folder contents deleted.")
         
-        st.header('Folder Watcher')
+    #     st.header('Folder Watcher')
 
-        def monitor_directory(path, check_interval):
-            directory_path = Path(path)
-            known_files = None # initial set of files in directory
-            #transcribed_files = set() 
+    #     def monitor_directory(path, check_interval):
+    #         directory_path = Path(path)
+    #         known_files = None # initial set of files in directory
+    #         #transcribed_files = set() 
 
-            while True:
-                known_files, transcribed_files = check_for_new_files(directory_path, known_files)
-                time.sleep(check_interval)  # wait for the specified interval before checking again`
+    #         while True:
+    #             known_files, transcribed_files = check_for_new_files(directory_path, known_files)
+    #             time.sleep(check_interval)  # wait for the specified interval before checking again`
 
 
-        def check_for_new_files(directory_path, known_files):
-            current_files = set(directory_path.glob('*'))  # get current set of files
-            if known_files is None:
-                known_files = set()
+    #     def check_for_new_files(directory_path, known_files):
+    #         current_files = set(directory_path.glob('*'))  # get current set of files
+    #         if known_files is None:
+    #             known_files = set()
 
-            new_files = current_files - known_files  # find the difference between the current and known files
+    #         new_files = current_files - known_files  # find the difference between the current and known files
             
-            for new_file in new_files:
-                file_path = Path(new_file)
-                if str(file_path) not in transcribed_files:
-                    with open(file_path, 'rb') as audio_file:
-                        audio_bytes = audio_file.read()
-                        audio_file_like = io.BytesIO(audio_bytes)
-                        audio_file_like.name = str(file_path) 
-                        transcript_newfile = transcribe_audio(audio_file_like)
-                        transcribed_files.add(file_path)
+    #         for new_file in new_files:
+    #             file_path = Path(new_file)
+    #             if str(file_path) not in transcribed_files:
+    #                 with open(file_path, 'rb') as audio_file:
+    #                     audio_bytes = audio_file.read()
+    #                     audio_file_like = io.BytesIO(audio_bytes)
+    #                     audio_file_like.name = str(file_path) 
+    #                     transcript_newfile = transcribe_audio(audio_file_like)
+    #                     transcribed_files.add(file_path)
                 
-                st.header('Transcript')
-                st.write(transcript_newfile)
-                st.header('Information')
-                info = extract_info_from_text(transcript_newfile)
-                ticket_info = ticket_definer(info)
-                definition = determine_priority(info)
-                st.write(ticket_info)
-                st.header('Form')
-                st.write(definition)  
+    #             st.header('Transcript')
+    #             st.write(transcript_newfile)
+    #             st.header('Information')
+    #             info = extract_info_from_text(transcript_newfile)
+    #             ticket_info = ticket_definer(info)
+    #             definition = determine_priority(info)
+    #             st.write(ticket_info)
+    #             st.header('Form')
+    #             st.write(definition)  
 
 
-            return current_files, transcribed_files
+    #         return current_files, transcribed_files
         
-                # You can add your transcription code here.
-                # return the current set of files as the new known_files for the next iteration
+    #             # You can add your transcription code here.
+    #             # return the current set of files as the new known_files for the next iteration
 
 
         
-        monitor_directory('C:/Users/hickeyli/OneDrive - Michigan State University/Desktop/AI/VMTranscribe/VMs', 10)  # checks the directory every 10 seconds
+    #     monitor_directory('C:/Users/hickeyli/OneDrive - Michigan State University/Desktop/AI/VMTranscribe/VMs', 10)  # checks the directory every 10 seconds
 
 
         
