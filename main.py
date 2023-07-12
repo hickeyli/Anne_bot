@@ -13,8 +13,8 @@ st.set_page_config(layout="wide")
 secrets = toml.load("secrets.toml")
 
 # Access the API key
-api_key = secrets["api_key"]
-huggingface_key = secrets["huggingface_key"]
+api_key = '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'
+huggingface_key = "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"
 
 #openai.api_key = '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'
 os.environ['OPENAI_API_KEY'] = api_key
