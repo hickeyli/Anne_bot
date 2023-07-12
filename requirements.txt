@@ -1,6 +1,6 @@
 streamlit==1.22.0
 #os-sys==2.1.4
-jsonlib==1.6.1
+#jsonlib==1.6.1
 regex==2023.6.3
 pandas==1.5.3
 toml==0.10.2
