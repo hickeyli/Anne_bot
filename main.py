@@ -71,7 +71,7 @@ else:
     # Sidebar
     with st.sidebar:
         st.header('Navigation')
-        page = st.radio('Select a page', ['Voicemail Bot', 'KB Chat'])
+        page = st.radio('Select a page', ['Voicemail Bot'])
 
         # Categorize Issues
 
@@ -202,29 +202,29 @@ else:
     # # VM Bot KB Check
 
 
-    def knowledgebase_search(type, issue):
-        from langchain.chains import RetrievalQA
-        if type == 'vm_kb':
+    # def knowledgebase_search(type, issue):
+    #     from langchain.chains import RetrievalQA
+    #     if type == 'vm_kb':
 
-            problem = summarize_text(issue)
-            st.write(problem)
-            prompt_template = """Is there any relevant information in the knowledge base that can help with this issue? If so, please provide the solution. If not, please respond with "No relevant information in knowledge base." 
+    #         problem = summarize_text(issue)
+    #         st.write(problem)
+    #         prompt_template = """Is there any relevant information in the knowledge base that can help with this issue? If so, please provide the solution. If not, please respond with "No relevant information in knowledge base." 
 
-            Issue: %s 
+    #         Issue: %s 
 
-            Solution:""" % problem
-        else:
-            prompt_template = issue
+    #         Solution:""" % problem
+    #     else:
+    #         prompt_template = issue
         
-        qa = RetrievalQAWithSourcesChain.from_chain_type(OpenAI(temperature=0), chain_type="stuff", retriever=db.as_retriever())
+    #     qa = RetrievalQAWithSourcesChain.from_chain_type(OpenAI(temperature=0), chain_type="stuff", retriever=db.as_retriever())
         
 
-        result = qa({"question": prompt_template}, return_only_outputs=True)
-        #qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever=db.as_retriever())
+    #     result = qa({"question": prompt_template}, return_only_outputs=True)
+    #     #qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever=db.as_retriever())
 
-        #result = qa.run(prompt_template)
+    #     #result = qa.run(prompt_template)
         
-        return result
+    #     return result
 
     def summarize_text(issue):
         issue_dict = issue.to_dict()
@@ -314,14 +314,14 @@ else:
         return form
 
 
-    def delete_files(folder_path):
-        # Get the list of files in the folder
-        file_list = os.listdir(folder_path)
+    # def delete_files(folder_path):
+    #     # Get the list of files in the folder
+    #     file_list = os.listdir(folder_path)
 
-        # Iterate over the files and delete them
-        for file_name in file_list:
-            file_path = os.path.join(folder_path, file_name)
-            os.remove(file_path)
+    #     # Iterate over the files and delete them
+    #     for file_name in file_list:
+    #         file_path = os.path.join(folder_path, file_name)
+    #         os.remove(file_path)
 
 
     # Page content
@@ -344,28 +344,28 @@ else:
                     info = extract_info_from_text(transcript)
                     ticket_info = ticket_definer(info)
                     
-                    #st.write(ticket_info)
-                    #st.write(info)
+                    st.write(ticket_info)
+                    st.write(info)
             else:
                 st.write('No file uploaded.')              
 
                     
-        with col2:
-            helper = st.checkbox('Want me to search the knowledge base?')
-            if helper:
-                type = 'vm_kb'
-                prediction = knowledgebase_search(type, info['Issue'])
-                # Load JSON data
-                solution = prediction
+        # with col2:
+        #     helper = st.checkbox('Want me to search the knowledge base?')
+        #     if helper:
+        #         type = 'vm_kb'
+        #         prediction = knowledgebase_search(type, info['Issue'])
+        #         # Load JSON data
+        #         solution = prediction
 
-                # Get the 'answer' and 'sources' values
-                answer = solution.get('answer', 'No answer provided.')
-                sources = solution.get('sources', 'No sources provided.')
+        #         # Get the 'answer' and 'sources' values
+        #         answer = solution.get('answer', 'No answer provided.')
+        #         sources = solution.get('sources', 'No sources provided.')
 
-                # Print the information
-                output = (f"Answer:\n{answer}\n\nSources:\n{sources}")
-                st.header('Possible Solution')
-                st.write(output)
+        #         # Print the information
+        #         output = (f"Answer:\n{answer}\n\nSources:\n{sources}")
+        #         st.header('Possible Solution')
+        #         st.write(output)
 
                 
 
@@ -437,24 +437,24 @@ else:
 
         
 
-    elif page == 'KB Chat':
-        st.header('KB Chat')
-        label = 'What do you want to know?'
-        query = st.text_input(label, value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False, label_visibility="visible")
-        if query:
-            type = 'kb_search'
-            solution = knowledgebase_search(type, query)
-            st.header('This is what I found')
+    # elif page == 'KB Chat':
+    #     st.header('KB Chat')
+    #     label = 'What do you want to know?'
+    #     query = st.text_input(label, value="", max_chars=None, key=None, type="default", help=None, autocomplete=None, on_change=None, args=None, kwargs=None, placeholder=None, disabled=False, label_visibility="visible")
+    #     if query:
+    #         type = 'kb_search'
+    #         solution = knowledgebase_search(type, query)
+    #         st.header('This is what I found')
 
-            chat_answer = solution
+    #         chat_answer = solution
 
-                # Get the 'answer' and 'sources' values
-            answer = chat_answer.get('answer', 'No answer provided.')
-            sources = chat_answer.get('sources', 'No sources provided.')
+    #             # Get the 'answer' and 'sources' values
+    #         answer = chat_answer.get('answer', 'No answer provided.')
+    #         sources = chat_answer.get('sources', 'No sources provided.')
 
-            # Print the information
-            chat_output = (f"Answer:\n{answer}\n\nSources:\n{sources}")
-            st.write(chat_output)
+    #         # Print the information
+    #         chat_output = (f"Answer:\n{answer}\n\nSources:\n{sources}")
+    #         st.write(chat_output)
 
 
 
