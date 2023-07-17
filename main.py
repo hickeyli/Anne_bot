@@ -162,10 +162,12 @@ else:
             'Ticket Number': [ticket_number]\n
             'Issue': [issue]
         """
+
+        formatted_data = data.format(netID=netID, name=name, phone_number=phone_number, ticket_number=ticket_number, issue=issue)
         # df = pd.DataFrame(data)
         
 
-        return data
+        return formatted_data
 
         # return netID, name, phone_number, ticket_number, issue
 
