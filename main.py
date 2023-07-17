@@ -137,11 +137,11 @@ else:
             temperature=0.0
         )
         data = """
-            NetID: \n\t{netID}\n
-            Name: \n\t{name}\n
-            Phone Number: \n\t{phone_number}\n
-            Ticket Number: \n\t{ticket_number}\n
-            Issue: \n\t{issue}
+            NetID: {netID}\n
+            Name: {name}\n
+            Phone Number: {phone_number}\n
+            Ticket Number: {ticket_number}\n
+            Issue: {issue}
         """
         # Generate context around the text using GPT-3
         generated_text = response['choices'][0]['message']['content']
