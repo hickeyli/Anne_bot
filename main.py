@@ -139,7 +139,7 @@ else:
         data = """
             NetID: {netID}\n
             Name: {name}\n
-            'Phone Number: {phone_number}\n
+            Phone Number: {phone_number}\n
             Ticket Number: {ticket_number}\n
             Issue: {issue}
         """
@@ -269,17 +269,21 @@ else:
 
     def ticket_definer(info):
         if info is not None:
-            st.write(info)
+            #st.write(info)
             st.header('Subject')
             if info['Issue'] is not None:
                 ticket_summary = summarize_text(info['Issue'])
                 st.write(ticket_summary)
-                st.header('Description')
-                st.write(str(info["Issue"]))
+                #st.header('Description')
+                #st.write(str(info["Issue"]))
                 #st.write(info['Issue'])
                 st.header('Category')
                 category = categorize_issue(ticket_summary)
                 st.write(category)
+                definition = determine_priority(info['Issue'])
+                #st.write(ticket_info)
+                st.header('Form')
+                st.write(definition)
         else:
             st.write('No information extracted.')
 
