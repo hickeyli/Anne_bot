@@ -136,7 +136,13 @@ else:
             ],
             temperature=0.0
         )
-
+        data = """
+            'NetID': [{netID}]\n
+            'Name': [{name}]\n
+            'Phone Number': [{phone_number}]\n
+            'Ticket Number': [{ticket_number}]\n
+            'Issue': [{issue}]
+        """
         # Generate context around the text using GPT-3
         generated_text = response['choices'][0]['message']['content']
 
@@ -155,13 +161,7 @@ else:
         issue = extract_issue(generated_text)
 
         # Create a DataFrame from the extracted information
-        data = """
-            'NetID': [{netID}]\n
-            'Name': [{name}]\n
-            'Phone Number': [{phone_number}]\n
-            'Ticket Number': [{ticket_number}]\n
-            'Issue': [{issue}]
-        """
+
 
         formatted_data = data.format(netID=netID, name=name, phone_number=phone_number, ticket_number=ticket_number, issue=issue)
         # df = pd.DataFrame(data)
