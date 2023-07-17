@@ -156,11 +156,11 @@ else:
 
         # Create a DataFrame from the extracted information
         data = """
-            'NetID': [netID]\n
-            'Name': [name]\n
-            'Phone Number': [phone_number]\n
-            'Ticket Number': [ticket_number]\n
-            'Issue': [issue]
+            'NetID': [{netID}]\n
+            'Name': [{name}]\n
+            'Phone Number': [{phone_number}]\n
+            'Ticket Number': [{ticket_number}]\n
+            'Issue': [{issue}]
         """
 
         formatted_data = data.format(netID=netID, name=name, phone_number=phone_number, ticket_number=ticket_number, issue=issue)
