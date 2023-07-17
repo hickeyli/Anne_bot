@@ -137,11 +137,11 @@ else:
             temperature=0.0
         )
         data = """
-            'NetID': {netID}\n
-            'Name': {name}\n
-            'Phone Number': {phone_number}\n
-            'Ticket Number': {ticket_number}\n
-            'Issue': {issue}
+            NetID: {netID}\n
+            Name: {name}\n
+            'Phone Number: {phone_number}\n
+            Ticket Number: {ticket_number}\n
+            Issue: {issue}
         """
         # Generate context around the text using GPT-3
         generated_text = response['choices'][0]['message']['content']
@@ -270,12 +270,13 @@ else:
     def ticket_definer(info):
         if info is not None:
             st.write(info)
-            st.header('Issue')
+            st.header('Subject')
             if info['Issue'] is not None:
                 ticket_summary = summarize_text(info['Issue'])
                 st.write(ticket_summary)
                 st.header('Description')
-                st.write(info['Issue'])
+                st.write(str(info["Issue"]))
+                #st.write(info['Issue'])
                 st.header('Category')
                 category = categorize_issue(ticket_summary)
                 st.write(category)
@@ -339,25 +340,25 @@ else:
         st.header('Voicemail Bot')
         st.markdown('Let me help you out')
 
-        col1, col2 = st.columns(2)
+        #col1, col2 = st.columns(2)
 
-        with col1:
-            uploaded_file = st.file_uploader(label='Upload voicemail file.', type ='.wav', accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
-            if uploaded_file is not None:
-                if transcript is not None:
-                    ## Transcribes audio file
-                    transcript = transcribe_audio(uploaded_file)
-                    
-                    st.header('Transcript')
-                    st.write(transcript)
-                    st.header('Information')
-                    info = extract_info_from_text(transcript)
-                    ticket_info = ticket_definer(info)
-                    
-                    st.write(ticket_info)
-                    st.write(info)
-            else:
-                st.write('No file uploaded.')              
+        #with col1:
+        uploaded_file = st.file_uploader(label='Upload voicemail file.', type ='.wav', accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
+        if uploaded_file is not None:
+            if transcript is not None:
+                ## Transcribes audio file
+                transcript = transcribe_audio(uploaded_file)
+                
+                st.header('Transcript')
+                st.write(transcript)
+                st.header('Information')
+                info = extract_info_from_text(transcript)
+                ticket_info = ticket_definer(info)
+                
+                st.write(ticket_info)
+                #st.write(info)
+        else:
+            st.write('No file uploaded.')              
 
                     
         # with col2:
