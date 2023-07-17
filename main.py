@@ -155,17 +155,17 @@ else:
         issue = extract_issue(generated_text)
 
         # Create a DataFrame from the extracted information
-        data = {
-            'NetID': [netID],
-            'Name': [name],
-            'Phone Number': [phone_number],
-            'Ticket Number': [ticket_number],
+        data = """
+            'NetID': [netID]\n
+            'Name': [name]\n
+            'Phone Number': [phone_number]\n
+            'Ticket Number': [ticket_number]\n
             'Issue': [issue]
-        }
-        df = pd.DataFrame(data)
+        """
+        # df = pd.DataFrame(data)
         
 
-        return df
+        return data
 
         # return netID, name, phone_number, ticket_number, issue
 
