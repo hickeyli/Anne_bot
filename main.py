@@ -12,17 +12,23 @@ st.set_page_config(layout="wide")
 
 
 
+from dotenv import load_dotenv
 
+load_dotenv()  # Load environment variables from .env file
+
+
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # Get API key from environment variable
 
 
 st.title('Annie: The ANR Assistant')
 
-api_key = st.secrets['api_key']
+#api_key = st.secrets['api_key']
 
-if not api_key:
+if not OPENAI_API_KEY:
     st.write("Please input an OpenAPI key to continue")
 else:
-    openai.api_key = api_key   
+    openai.api_key = OPENAI_API_KEY   
     huggingface_key = "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"
     os.environ['OPENAI_API_KEY'] = api_key
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
