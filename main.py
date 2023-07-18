@@ -63,10 +63,10 @@ else:
  
 
 
-    # Sidebar
-    with st.sidebar:
-        st.header('Navigation')
-        page = st.radio('Select a page', ['Voicemail Bot'])
+    # # Sidebar
+    # with st.sidebar:
+    #     st.header('Navigation')
+    #     page = st.radio('Select a page', ['Voicemail Bot'])
 
         # Categorize Issues
 
