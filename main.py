@@ -17,7 +17,7 @@ st.set_page_config(layout="wide")
 
 st.title('Annie: The ANR Assistant')
 
-api_key = st.text_input("Put your OpenAPI key here")
+api_key = st.secrets['api_key']
 
 if not api_key:
     st.write("Please input an OpenAPI key to continue")
