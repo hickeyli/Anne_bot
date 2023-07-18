@@ -12,14 +12,14 @@ st.set_page_config(layout="wide")
 
 st.title('Annie: The ANR Assistant')
 
-api_key = st.secrets['api_key']
+key = st.secrets['path']
 
-if not OPENAI_API_KEY:
+if not key:
     st.write("Please input an OpenAPI key to continue")
 else:
-    openai.api_key = api_key  
+    openai.api_key = key  
     huggingface_key = "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"
-    os.environ['OPENAI_API_KEY'] = api_key
+    os.environ['OPENAI_API_KEY'] = key
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = huggingface_key
     # Access the API key
 
