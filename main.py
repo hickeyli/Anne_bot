@@ -36,6 +36,7 @@ else:
     index = pinecone.Index('kbchat')
 
     from langchain.embeddings import HuggingFaceEmbeddings
+    from langchain.embeddings import HuggingFaceHubEmbeddings
     from langchain.text_splitter import CharacterTextSplitter
     from langchain.vectorstores import Pinecone
     from langchain.document_loaders import UnstructuredFileLoader
