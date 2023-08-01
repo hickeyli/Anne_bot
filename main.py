@@ -14,6 +14,10 @@ st.title('Annie: The ANR Assistant')
 
 key = st.secrets['path']
 
+@st.cache
+def load_excel():
+    return pd.read_excel('issues.xlsx')
+
 if not key:
     st.write("Please input an OpenAPI key to continue")
 else:
@@ -24,6 +28,7 @@ else:
     # Access the API key
 
 
+    
     pinecone.init(      
         api_key='482713ab-eec5-432a-90d4-a16bcb867334',      
         environment='asia-northeast1-gcp'      
@@ -72,7 +77,7 @@ else:
 
 
     # Load data from Excel file
-    df = pd.read_excel('issues.xlsx')
+    df = load_excel()
 
     def categorize_issue(issue):
         keywords = df['Keyword'].tolist()
