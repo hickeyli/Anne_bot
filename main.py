@@ -14,10 +14,6 @@ st.title('Annie: The ANR Assistant')
 
 key = st.secrets['path']
 
-@st.cache
-def load_excel():
-    return pd.read_excel('issues.xlsx')
-
 if not key:
     st.write("Please input an OpenAPI key to continue")
 else:
@@ -28,7 +24,6 @@ else:
     # Access the API key
 
 
-    
     pinecone.init(      
         api_key='482713ab-eec5-432a-90d4-a16bcb867334',      
         environment='asia-northeast1-gcp'      
@@ -36,7 +31,6 @@ else:
     index = pinecone.Index('kbchat')
 
     from langchain.embeddings import HuggingFaceEmbeddings
-    from langchain.embeddings import HuggingFaceHubEmbeddings
     from langchain.text_splitter import CharacterTextSplitter
     from langchain.vectorstores import Pinecone
     from langchain.document_loaders import UnstructuredFileLoader
@@ -78,7 +72,7 @@ else:
 
 
     # Load data from Excel file
-    df = load_excel()
+    df = pd.read_excel('issues.xlsx')
 
     def categorize_issue(issue):
         keywords = df['Keyword'].tolist()
