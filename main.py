@@ -24,15 +24,15 @@ else:
     # Access the API key
 
 
-    pinecone.init(      
-        api_key='482713ab-eec5-432a-90d4-a16bcb867334',      
-        environment='asia-northeast1-gcp'      
-    )      
-    index = pinecone.Index('kbchat')
+    # pinecone.init(      
+    #     api_key='482713ab-eec5-432a-90d4-a16bcb867334',      
+    #     environment='asia-northeast1-gcp'      
+    # )      
+    # index = pinecone.Index('kbchat')
 
     from langchain.embeddings import HuggingFaceEmbeddings
     from langchain.text_splitter import CharacterTextSplitter
-    from langchain.vectorstores import Pinecone
+    # from langchain.vectorstores import Pinecone
     from langchain.document_loaders import UnstructuredFileLoader
     from langchain.chains import RetrievalQAWithSourcesChain
     from langchain import PromptTemplate, FewShotPromptTemplate
@@ -47,11 +47,11 @@ else:
 
     ## Loader
 
-    embeddings = HuggingFaceEmbeddings()
-    index_name = 'kbchat'
+    # embeddings = HuggingFaceEmbeddings()
+    # index_name = 'kbchat'
 
-    #db = FAISS.load_local("faiss_index", embeddings)
-    db = Pinecone.from_existing_index('kbchat', embeddings)
+    # #db = FAISS.load_local("faiss_index", embeddings)
+    # db = Pinecone.from_existing_index('kbchat', embeddings)
 
     # Page layout
     info = ''
@@ -72,48 +72,48 @@ else:
 
 
     # Load data from Excel file
-    df = pd.read_excel('issues.xlsx')
+    # df = pd.read_excel('issues.xlsx')
 
-    def categorize_issue(issue):
-        keywords = df['Keyword'].tolist()
+    # def categorize_issue(issue):
+    #     keywords = df['Keyword'].tolist()
 
-        # # An example prompt with multiple input variables
-        multiple_input_prompt = PromptTemplate(
-            input_variables=['issue_test', 'keyword_test'], 
-            template="Take this issue: {issue_test} and tell me which one of these keywords it most closely resembles: {keyword_test}. Respond with this format: \nKeyword:"
-        )
+    #     # # An example prompt with multiple input variables
+    #     multiple_input_prompt = PromptTemplate(
+    #         input_variables=['issue_test', 'keyword_test'], 
+    #         template="Take this issue: {issue_test} and tell me which one of these keywords it most closely resembles: {keyword_test}. Respond with this format: \nKeyword:"
+    #     )
 
-        guess = multiple_input_prompt.format(issue_test = issue, keyword_test= keywords)
+    #     guess = multiple_input_prompt.format(issue_test = issue, keyword_test= keywords)
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a helpful IT assistant who is trying to detect the keyword the given problem most likely relates too. You are given the following text:"
-                },
-                {
-                    "role": "user",
-                    "content": guess
-                }
-            ],
-            temperature=0.0,
-            max_tokens=30  # Limit to approximately 20 words
-        )
+    #     response = openai.ChatCompletion.create(
+    #         model="gpt-3.5-turbo",
+    #         messages=[
+    #             {
+    #                 "role": "system",
+    #                 "content": "You are a helpful IT assistant who is trying to detect the keyword the given problem most likely relates too. You are given the following text:"
+    #             },
+    #             {
+    #                 "role": "user",
+    #                 "content": guess
+    #             }
+    #         ],
+    #         temperature=0.0,
+    #         max_tokens=30  # Limit to approximately 20 words
+    #     )
 
-        keyword_response = response['choices'][0]['message']['content']
+    #     keyword_response = response['choices'][0]['message']['content']
 
-        # Extract the keyword from the response
+    #     # Extract the keyword from the response
 
-        keyword = keyword_response.split(": ")[1]
-        # Find the row in the DataFrame where the keyword column matches the given keyword
-        matching_row = df[df['Keyword'] == keyword]
-        if matching_row.empty:
-            category = 'Desktop and Mobile Computing / Desktop and Mobile Device Support'
-        else:
-            category = matching_row['Category'].values[0]
+    #     keyword = keyword_response.split(": ")[1]
+    #     # Find the row in the DataFrame where the keyword column matches the given keyword
+    #     matching_row = df[df['Keyword'] == keyword]
+    #     if matching_row.empty:
+    #         category = 'Desktop and Mobile Computing / Desktop and Mobile Device Support'
+    #     else:
+    #         category = matching_row['Category'].values[0]
 
-        return category
+    #     return category
 
     def extract_info_from_text(text):
         response = openai.ChatCompletion.create(
@@ -272,56 +272,56 @@ else:
                 #st.header('Description')
                 #st.write(str(info["Issue"]))
                 #st.write(info['Issue'])
-                st.header('Category')
-                category = categorize_issue(ticket_summary)
-                st.write(category)
-                definition = determine_priority(info['Issue'])
+                # st.header('Category')
+                # category = categorize_issue(ticket_summary)
+                # st.write(category)
+                # definition = determine_priority(info['Issue'])
                 #st.write(ticket_info)
-                st.header('Form')
-                st.write(definition)
+                # st.header('Form')
+                # st.write(definition)
         else:
             st.write('No information extracted.')
 
-    def determine_priority(issue):
-        high_priority_keywords = df['Keyword'].tolist()
+    # def determine_priority(issue):
+    #     high_priority_keywords = df['Keyword'].tolist()
 
-        # # An example prompt with multiple input variables
-        multiple_input_prompt = PromptTemplate(
-            input_variables=['issue_test', 'incident_list'], 
-            template="Take this issue: {issue_test} and decide if it closesy resembles on of the following descriptions of an issue: {incident_list}. If the issue given relates to one of the definitions, then respond with this \nDefinition: Incident. If it doesn't match, then respond with \n Definition: Service Request."
-        )
+    #     # # An example prompt with multiple input variables
+    #     multiple_input_prompt = PromptTemplate(
+    #         input_variables=['issue_test', 'incident_list'], 
+    #         template="Take this issue: {issue_test} and decide if it closesy resembles on of the following descriptions of an issue: {incident_list}. If the issue given relates to one of the definitions, then respond with this \nDefinition: Incident. If it doesn't match, then respond with \n Definition: Service Request."
+    #     )
 
-        guess = multiple_input_prompt.format(issue_test = issue, incident_list= high_priority_keywords)
+    #     guess = multiple_input_prompt.format(issue_test = issue, incident_list= high_priority_keywords)
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a helpful IT assistant who is trying to decide if the issue given is considered a high priority issue. You are given the following text:"
-                },
-                {
-                    "role": "user",
-                    "content": guess
-                }
-            ],
-            temperature=0.0,
-            max_tokens=30  # Limit to approximately 20 words
-        )
+    #     response = openai.ChatCompletion.create(
+    #         model="gpt-3.5-turbo",
+    #         messages=[
+    #             {
+    #                 "role": "system",
+    #                 "content": "You are a helpful IT assistant who is trying to decide if the issue given is considered a high priority issue. You are given the following text:"
+    #             },
+    #             {
+    #                 "role": "user",
+    #                 "content": guess
+    #             }
+    #         ],
+    #         temperature=0.0,
+    #         max_tokens=30  # Limit to approximately 20 words
+    #     )
 
-        priority_response = response['choices'][0]['message']['content']
+    #     priority_response = response['choices'][0]['message']['content']
 
-        # Extract the keyword from the response
+    #     # Extract the keyword from the response
 
-        priority = priority_response.split(": ")[1]
-        # Find the row in the DataFrame where the keyword column matches the given keyword
+    #     priority = priority_response.split(": ")[1]
+    #     # Find the row in the DataFrame where the keyword column matches the given keyword
         
-        if priority == 'Incident':
-            form = 'Incident Form'
-        else:
-            form = 'Service Request Form'
+    #     if priority == 'Incident':
+    #         form = 'Incident Form'
+    #     else:
+    #         form = 'Service Request Form'
 
-        return form
+    #     return form
 
 
     # def delete_files(folder_path):
