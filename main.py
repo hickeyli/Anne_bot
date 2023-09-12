@@ -342,7 +342,7 @@ else:
         #col1, col2 = st.columns(2)
 
         #with col1:
-        uploaded_file = st.file_uploader(label='Upload voicemail file.', type ='.wav', accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
+        uploaded_file = st.file_uploader(label='Upload voicemail file.', type =('.wav', '.m4a'), accept_multiple_files=False, key=None, help=None, on_change=None, args=None, kwargs=None, disabled=False, label_visibility="visible")
         if uploaded_file is not None:
             if transcript is not None:
                 ## Transcribes audio file
